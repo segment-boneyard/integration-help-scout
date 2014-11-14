@@ -1,0 +1,32 @@
+{
+  "input": {
+    "type": "identify",
+    "userId": "user-id",
+    "traits": {
+      "gender": "some-gender",
+      "age": "some-age",
+      "location": "some-location",
+      "photoUrl": "some-url",
+      "firstName": "john",
+      "lastName": "doe",
+      "email": "jd@example.com",
+      "company": "Segment",
+      "website": "website",
+      "address": {
+        "city": "some-city",
+        "country": "some-country"
+      }
+    }
+  },
+  "output": {
+    "gender": "some-gender",
+    "location": "some-location",
+    "age": "some-age",
+    "photoUrl": "some-url",
+    "firstName": "john",
+    "lastName": "doe",
+    "emails": [{ "value": "jd@example.com" }],
+    "websites": [{ "value": "website" }],
+    "organization": "Segment"
+  }
+}
