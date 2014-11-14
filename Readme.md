@@ -1,8 +1,8 @@
-[![Build Status](https://circleci.com/gh/segmentio/integration-help-scout.png)](https://circleci.com/gh/segmentio/integration-help-scout)
+[![Build Status](https://circleci.com/gh/segmentio/integration-help-scout/tree/master.png?style=badge)](https://circleci.com/gh/segmentio/integration-help-scout/tree/master)
 
-# Help Scout server-side integration.
+# integration-help-scout
 
-Write me...
+Help Scout server-side integration for Segment.
 
 
 ## License
