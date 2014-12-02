@@ -76,12 +76,6 @@ describe('Help Scout', function () {
     });
   });
 
-  describe('.track()', function () {
-    it('should do nothing on track', function (done) {
-      helpscout.track(helpers.track(), done);
-    });
-  });
-
   describe('.identify()', function () {
     it('should be able to identify a new user', function(done){
       var msg = helpers.identify();
