@@ -26,8 +26,7 @@ describe('Help Scout', function () {
       .endpoint('https://api.helpscout.net/v1')
       .ensure('message.email', { methods: ['identify'] })
       .channels(['server', 'mobile', 'client'])
-      .ensure('settings.apiKey')
-      .retries(2);
+      .ensure('settings.apiKey');
   });
 
   describe('.validate()', function () {
