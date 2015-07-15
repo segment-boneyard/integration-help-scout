@@ -99,7 +99,7 @@ describe('Help Scout', function () {
     });
 
     it('should be able to identify an existing user', function (done) {
-      var msg = helpers.identify({ email: 'calvin@segment.io' });
+      var msg = helpers.identify({ email: 'supertest@segment.com' });
 
       payload.emails = [{ value: msg.email() }];
       payload.firstName = msg.firstName();
@@ -124,14 +124,14 @@ describe('Help Scout', function () {
       test
         .set({ apiKey: 'x' })
         .identify({})
-        .error('cannot GET /v1/customers.json?email= (401)', done);
+        .error('cannot GET /v1/customers.json (401)', done);
     });
   });
 
   describe('._getUser()', function () {
     it('should error on an invalid key', function (done) {
       helpscout.settings.apiKey = 'segment';
-      var email = 'calvin@segment.io';
+      var email = 'supertest@segment.com';
       helpscout._getUser({ email : email }, function (err, user) {
         should.exist(err);
         err.status.should.eql(401);
@@ -150,7 +150,7 @@ describe('Help Scout', function () {
     });
 
     it('should return an existing user', function (done) {
-      var identify = helpers.identify({ email: 'calvin@segment.io' })
+      var identify = helpers.identify({ email: 'supertest@segment.com' })
       var email = identify.email();
       helpscout._getUser({ email : email }, function (err, user) {
         should.not.exist(err);
