@@ -124,7 +124,7 @@ describe('Help Scout', function () {
       test
         .set({ apiKey: 'x' })
         .identify({})
-        .error('cannot GET /v1/customers.json (401)', done);
+        .error('Unauthorized', done);
     });
   });
 
