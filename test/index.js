@@ -1,18 +1,18 @@
+'use strict';
 
 var Test = require('segmentio-integration-tester');
-var helpers = require('./helpers');
-var facade = require('segmentio-facade');
-var mapper = require('../lib/mapper');
-var assert = require('assert');
 var should = require('should');
+var helpers = require('./helpers');
+var mapper = require('../lib/mapper');
 var Helpscout = require('..');
 
-describe('Help Scout', function () {
+describe('Help Scout', function() {
   var helpscout;
   var payload;
   var settings;
+  var test;
 
-  beforeEach(function(){
+  beforeEach(function() {
     payload = {};
     settings = { apiKey: '2c3f0736da1f53462ba0a1e4bb07e42c20778be8' };
     helpscout = new Helpscout(settings);
@@ -20,7 +20,7 @@ describe('Help Scout', function () {
     test.mapper(mapper);
   });
 
-  it('should correct settings', function(){
+  it('should correct settings', function() {
     test
       .name('Help Scout')
       .endpoint('https://api.helpscout.net/v1')
@@ -29,61 +29,61 @@ describe('Help Scout', function () {
       .ensure('settings.apiKey');
   });
 
-  describe('.validate()', function () {
-    it('should be invalid without apiKey', function(){
+  describe('.validate()', function() {
+    it('should be invalid without apiKey', function() {
       test.invalid(helpers.identify(), {});
     });
 
-    it('should be invalid if email is missing', function(){
+    it('should be invalid if email is missing', function() {
       test.invalid({ type: 'identify' }, settings);
     });
 
-    it('should be valid if email and apiKey is given', function(){
+    it('should be valid if email and apiKey is given', function() {
       test.valid(helpers.identify(), settings);
     });
   });
 
-  describe('mapper', function(){
-    describe('identify', function(){
-      it('should map basic identify', function(){
+  describe('mapper', function() {
+    describe('identify', function() {
+      it('should map basic identify', function() {
         test.maps('identify-basic');
       });
 
-      it('should fallback to .photoUrl', function(){
+      it('should fallback to .photoUrl', function() {
         test.maps('identify-photo-url');
       });
 
-      it('should fallback to .background', function(){
+      it('should fallback to .background', function() {
         test.maps('identify-background');
       });
 
-      it('should fallback to .zip', function(){
+      it('should fallback to .zip', function() {
         test.maps('identify-zip');
       });
 
-      it('should fallback to .jobTitle', function(){
+      it('should fallback to .jobTitle', function() {
         test.maps('identify-job-title');
       });
 
-      it('should map address properly even when info is in .traits', function(){
+      it('should map address properly even when info is in .traits', function() {
         test.maps('identify-address');
       });
 
-      it('should map multi .phones and .websites properly', function(){
+      it('should map multi .phones and .websites properly', function() {
         test.maps('identify-multi');
       });
     });
   });
 
-  describe('.identify()', function () {
-    it('should be able to identify a new user', function(done){
+  describe('.identify()', function() {
+    it('should be able to identify a new user', function(done) {
       var msg = helpers.identify();
 
       payload.emails = [{ value: msg.email() }];
       payload.firstName = msg.firstName();
       payload.lastName = msg.lastName();
       payload.organization = msg.proxy('traits.organization') || msg.proxy('traits.company');
-      payload.websites = msg.proxy('traits.websites').map(function(w){ return { value: w } });
+      payload.websites = msg.proxy('traits.websites').map(function(w) { return { value: w }; });
       payload.phones = [{ location: 'mobile', value: msg.proxy('traits.phone') }];
 
       test
@@ -91,21 +91,21 @@ describe('Help Scout', function () {
         .identify(msg)
         .request(1)
         .sends(payload)
-        .expects(201, function(err, res){
+        .expects(201, function(err, res) {
           if (err) return done(err);
           res[0].body.item.emails[0].value.should.eql(msg.email());
           done();
         });
     });
 
-    it('should be able to identify an existing user', function (done) {
+    it('should be able to identify an existing user', function(done) {
       var msg = helpers.identify({ email: 'supertest@segment.com' });
 
       payload.emails = [{ value: msg.email() }];
       payload.firstName = msg.firstName();
       payload.lastName = msg.lastName();
       payload.organization = msg.proxy('traits.organization') || msg.proxy('traits.company');
-      payload.websites = msg.proxy('traits.websites').map(function(w){ return { value: w } });
+      payload.websites = msg.proxy('traits.websites').map(function(w) { return { value: w }; });
       payload.phones = [{ location: 'mobile', value: msg.proxy('traits.phone') }];
 
       test
@@ -113,14 +113,14 @@ describe('Help Scout', function () {
         .identify(msg)
         .request(1)
         .sends(payload)
-        .expects(201, function(err, res){
+        .expects(201, function(err, res) {
           if (err) return done(err);
           res[0].body.item.emails[0].value.should.eql(msg.email());
           done();
         });
     });
 
-    it('should error on invalid keys', function(done){
+    it('should error on invalid keys', function(done) {
       test
         .set({ apiKey: 'x' })
         .identify({})
@@ -128,11 +128,11 @@ describe('Help Scout', function () {
     });
   });
 
-  describe('._getUser()', function () {
-    it('should error on an invalid key', function (done) {
+  describe('._getUser()', function() {
+    it('should error on an invalid key', function(done) {
       helpscout.settings.apiKey = 'segment';
       var email = 'supertest@segment.com';
-      helpscout._getUser({ email : email }, function (err, user) {
+      helpscout._getUser({ email : email }, function(err, user) {
         should.exist(err);
         err.status.should.eql(401);
         should.not.exist(user);
@@ -140,19 +140,19 @@ describe('Help Scout', function () {
       });
     });
 
-    it('should not return a non-existent user', function (done) {
+    it('should not return a non-existent user', function(done) {
       var email = 'non-existent@segment.io';
-      helpscout._getUser({ email : email }, function (err, user) {
+      helpscout._getUser({ email : email }, function(err, user) {
         should.not.exist(err);
         should.not.exist(user);
         done();
       });
     });
 
-    it('should return an existing user', function (done) {
-      var identify = helpers.identify({ email: 'supertest@segment.com' })
+    it('should return an existing user', function(done) {
+      var identify = helpers.identify({ email: 'supertest@segment.com' });
       var email = identify.email();
-      helpscout._getUser({ email : email }, function (err, user) {
+      helpscout._getUser({ email : email }, function(err, user) {
         should.not.exist(err);
         should.exist(user);
         user.firstName.should.eql(identify.firstName());
