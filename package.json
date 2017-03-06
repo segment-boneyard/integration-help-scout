@@ -1,7 +1,6 @@
 {
   "name": "@segment/integration-help-scout",
   "version": "1.1.1",
-  
   "description": "Help Scout server-side integration",
   "author": "Segment <friends@segment.com>",
   "repository": {
