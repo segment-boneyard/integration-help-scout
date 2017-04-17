@@ -1,4 +1,10 @@
 
+1.1.3 / 2017-04-17
+==================
+
+  * Merge pull request #13 from segment-integrations/bump-int-tester-version-2.x
+  * Bump int-tester version to 2.x
+
 1.1.0 / 2017-01-31
 ==================
 
